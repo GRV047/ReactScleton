@@ -1,0 +1,33 @@
+.main___containers {
+    background: #fca31c;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 5px;
+    border:1px solid;
+    width:60%
+}
+
+.form___section {
+    padding: 1rem;
+}
+
+.form___element {
+    padding: 3px
+}
+
+.form___button___element {
+    padding: 1rem;
+}
+
+.heading___text {
+    background: #fff;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid
+}

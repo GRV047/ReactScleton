@@ -1,0 +1,15 @@
+.menu {
+  position: relative;
+  list-style-type: none;
+}
+
+.menu li {
+  display: inline;
+  padding: 5px;
+  margin: 2px;
+  background: #555;
+}
+
+.footer {
+  bottom: 0;
+}
