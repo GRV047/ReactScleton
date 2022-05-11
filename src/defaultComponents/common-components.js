@@ -2,12 +2,13 @@ import './common-components.css';
 
 function Header() {
     return (
-        <div>
-            <ul className='menu'>
-                <li>Home</li>
-                <li>About</li>
-                <li>Gallery</li>
-            </ul>
+        <div className="body">
+            <div className="navMenu">
+                <a href='#'>SignUp</a>
+                <a href='#'>Login</a>
+                <a href='#'>About</a>
+                <div className="dot"></div>
+            </div>
         </div>
     )
 }
@@ -15,7 +16,13 @@ function Header() {
 function Footer() {
     return (
         <div className="footer">
-            <small>This is my footer Section</small>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-4">area1</div>
+                    <div className="col-lg-4">area2</div>
+                    <div className="col-lg-4">area3</div>
+                </div>
+            </div>
         </div>
     )
 }
