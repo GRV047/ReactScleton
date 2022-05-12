@@ -1,12 +1,21 @@
 import ENVIRONMENT from "./environment";
 
-const Admin ={
-    common:ENVIRONMENT.apiEndPoint+'/admin',
-    createNewUser:common+'/createNewUser'
+//Instance of Base URL
+export const apiAtEndpint = ENVIRONMENT.apiEndPoint;
+
+//Base Url for each model
+const Common = {
+    adminCommon:apiAtEndpint+'/admin',
 }
 
-const Api = {
-    Admin:Admin
+//Admin Model
+const Admin = {
+    signUp:Common.adminCommon+'/signUp'
 }
 
-export default Api;
+
+//Export all models
+export {
+    Common,
+    Admin
+}

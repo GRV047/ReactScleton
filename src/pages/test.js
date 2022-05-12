@@ -26,9 +26,10 @@ const SignUp = () => {
 
     const signUpUser = (event) => {
         event.preventDefault();
-        console.log(formValues)
-
-        const response = signUp(formValues);
+        let object = formValues
+        object['fullAddress'] = `${formValues.address}, ${formValues.address2}`
+        console.log(object)
+        const response = signUp(object);
 
     }
     return (
@@ -43,31 +44,31 @@ const SignUp = () => {
                         <div className="row">
                             <div className="col-md-6 form___element">
                                 <label htmlFor="firstName" className="form-label">First Name</label>
-                                <input type="text" className="form-control" id="fName" name="firstName" value={formValues.firstName} onChange={handleInput} />
+                                <input type="text" className="form-control" id="fName" autoComplete='off' name="firstName" value={formValues.firstName} onChange={handleInput} />
                             </div>
                             <div className="col-md-6 form___element">
                                 <label htmlFor="lastName" className="form-label">Last Name</label>
-                                <input type="text" className="form-control" id="lastName" name="lastName" value={formValues.lastName} onChange={handleInput} />
+                                <input type="text" className="form-control" id="lastName" autoComplete='off' name="lastName" value={formValues.lastName} onChange={handleInput} />
                             </div>
                             <div className="col-md-6 form___element">
                                 <label htmlFor="inputEmail4" className="form-label">Email</label>
-                                <input type="email" className="form-control" id="inputEmail4" name="email" value={formValues.email} onChange={handleInput} />
+                                <input type="email" className="form-control" id="inputEmail4" autoComplete='off' name="email" value={formValues.email} onChange={handleInput} />
                             </div>
                             <div className="col-md-6 form___element">
                                 <label htmlFor="inputPassword4" className="form-label">Password</label>
-                                <input type="password" className="form-control" id="inputPassword4" name="password" value={formValues.password} onChange={handleInput} />
+                                <input type="password" className="form-control" id="inputPassword4" autoComplete='off' name="password" value={formValues.password} onChange={handleInput} />
                             </div>
                             <div className="col-12 form___element">
                                 <label htmlFor="inputAddress" className="form-label">Address</label>
-                                <input type="text" className="form-control" id="inputAddress" placeholder="Apartment, studio, or floor" name="address" value={formValues.address} onChange={handleInput} />
+                                <input type="text" className="form-control" id="inputAddress" placeholder="Apartment, studio, or floor" autoComplete='off' name="address" value={formValues.address} onChange={handleInput} />
                             </div>
                             <div className="col-12 form___element">
                                 <label htmlFor="inputAddress2" className="form-label">Address 2</label>
-                                <input type="text" className="form-control" id="inputAddress2" placeholder="Road, Area" name="address2" value={formValues.address2} onChange={handleInput} />
+                                <input type="text" className="form-control" id="inputAddress2" placeholder="Road, Area" autoComplete='off' name="address2" value={formValues.address2} onChange={handleInput} />
                             </div>
                             <div className="col-md-6 form___element">
                                 <label htmlFor="inputCity" className="form-label">City</label>
-                                <input type="text" className="form-control" id="inputCity" name='city' value={formValues.city} onChange={handleInput} />
+                                <input type="text" className="form-control" id="inputCity" autoComplete='off' name='city' value={formValues.city} onChange={handleInput} />
                             </div>
                             {/* <div className="col-md-4 form___element">
                                 <label htmlFor="inputState" className="form-label">State</label>
@@ -78,7 +79,7 @@ const SignUp = () => {
                             </div> */}
                             <div className="col-md-2 form___element">
                                 <label htmlFor="inputZip" className="form-label">Pin</label>
-                                <input type="text" className="form-control" id="inputZip" name='pin' value={formValues.pin} onChange={handleInput} />
+                                <input type="text" className="form-control" id="inputZip" autoComplete='off' name='pin' value={formValues.pin} onChange={handleInput} />
                             </div>
                             <div className="col-12 form___element">
                                 <div className="form-check">
@@ -104,6 +105,14 @@ const Login = () => {
         <div className="main___containers">
 
         </div>
+    )
+}
+
+const Home = () => {
+    return (
+        <>
+        
+        </>
     )
 }
 

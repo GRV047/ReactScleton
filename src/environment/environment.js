@@ -1,5 +1,5 @@
 const ENVIRONMENT={
-    apiEndPoint:"localhost:8000/api",
+    apiEndPoint:"http://localhost:5000/api",
     type:"local"
 }
 
