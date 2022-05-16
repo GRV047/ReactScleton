@@ -1,12 +1,13 @@
 import './common-components.css';
+import {NavLink} from 'react-router-dom'
 
 function Header() {
     return (
         <div className="body">
             <div className="navMenu">
-                <a href='#'>SignUp</a>
-                <a href='#'>Login</a>
-                <a href='#'>About</a>
+                <NavLink className="menu" to='/signup'>SignUp</NavLink>
+                <NavLink className="menu" to='/login'>Login</NavLink>
+                <NavLink className="menu" to='#'>About</NavLink>
                 <div className="dot"></div>
             </div>
         </div>

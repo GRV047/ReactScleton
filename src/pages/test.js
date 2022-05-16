@@ -2,9 +2,16 @@ import { useState } from 'react';
 import './test.css';
 import { signUp } from '../environment/models/admin.url';
 
+import { Header, Footer } from '../defaultComponents/common-components';
+import { NavLink, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { SimpleTextBox, SimpleEmailFirld, PasswordField } from '../util/FormFirlds/FormFirld';
+
+
+toast.configure();
 
 const SignUp = () => {
-
     const [formValues, setFormValue] = useState({
         firstName: "",
         lastName: "",
@@ -23,101 +30,231 @@ const SignUp = () => {
 
         setFormValue({ ...formValues, [name]: value })
     }
-
-    const signUpUser = (event) => {
+    const navigate = useNavigate()
+    const signUpUser = async(event) => {
         event.preventDefault();
         let object = formValues
         object['fullAddress'] = `${formValues.address}, ${formValues.address2}`
-        console.log(object)
-        const response = signUp(object);
+        const response = await signUp(object);
+
+        console.log('this',response)
+        if (response.status === 200) {
+            toast.success('Successfuly created', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                type: "success"
+            })
+            navigate("/")
+        } else {
+            toast("Oops! Somthing went wrong", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                type: "error"
+            })
+            navigate("/")
+        }
 
     }
     return (
-        <div className="viewPort">
+        <>
+            <Header />
+            <div className="viewPort">
 
-            <div className="main___containers mt-3 mb-3">
-                <div className="heading___text">
-                    <h3>Sign Up</h3>
-                </div>
-                <form className="form___section" onSubmit={signUpUser}>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-6 form___element">
-                                <label htmlFor="firstName" className="form-label">First Name</label>
-                                <input type="text" className="form-control" id="fName" autoComplete='off' name="firstName" value={formValues.firstName} onChange={handleInput} />
-                            </div>
-                            <div className="col-md-6 form___element">
-                                <label htmlFor="lastName" className="form-label">Last Name</label>
-                                <input type="text" className="form-control" id="lastName" autoComplete='off' name="lastName" value={formValues.lastName} onChange={handleInput} />
-                            </div>
-                            <div className="col-md-6 form___element">
-                                <label htmlFor="inputEmail4" className="form-label">Email</label>
-                                <input type="email" className="form-control" id="inputEmail4" autoComplete='off' name="email" value={formValues.email} onChange={handleInput} />
-                            </div>
-                            <div className="col-md-6 form___element">
-                                <label htmlFor="inputPassword4" className="form-label">Password</label>
-                                <input type="password" className="form-control" id="inputPassword4" autoComplete='off' name="password" value={formValues.password} onChange={handleInput} />
-                            </div>
-                            <div className="col-12 form___element">
-                                <label htmlFor="inputAddress" className="form-label">Address</label>
-                                <input type="text" className="form-control" id="inputAddress" placeholder="Apartment, studio, or floor" autoComplete='off' name="address" value={formValues.address} onChange={handleInput} />
-                            </div>
-                            <div className="col-12 form___element">
-                                <label htmlFor="inputAddress2" className="form-label">Address 2</label>
-                                <input type="text" className="form-control" id="inputAddress2" placeholder="Road, Area" autoComplete='off' name="address2" value={formValues.address2} onChange={handleInput} />
-                            </div>
-                            <div className="col-md-6 form___element">
-                                <label htmlFor="inputCity" className="form-label">City</label>
-                                <input type="text" className="form-control" id="inputCity" autoComplete='off' name='city' value={formValues.city} onChange={handleInput} />
-                            </div>
-                            {/* <div className="col-md-4 form___element">
-                                <label htmlFor="inputState" className="form-label">State</label>
-                                <select id="inputState" className="form-select">
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
-                                </select>
-                            </div> */}
-                            <div className="col-md-2 form___element">
-                                <label htmlFor="inputZip" className="form-label">Pin</label>
-                                <input type="text" className="form-control" id="inputZip" autoComplete='off' name='pin' value={formValues.pin} onChange={handleInput} />
-                            </div>
-                            <div className="col-12 form___element">
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" id="gridCheck" />
-                                    <label className="form-check-label" for="gridCheck">
-                                        Check me out
-                                    </label>
+                <div className="main___containers mt-3 mb-3">
+                    <div className="heading___text">
+                        <h3>Sign Up</h3>
+                    </div>
+                    <form className="form___section" onSubmit={signUpUser}>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-6 form___element">
+                                    <SimpleTextBox labelname={"firstName"}
+                                        labelText={"First Name"}
+                                        labelClassName={"form-label"}
+                                        inputType={"text"}
+                                        textClassName={"form-control"}
+                                        formId={"fName"}
+                                        textautoComplete={"off"}
+                                        name={"firstName"}
+                                        textValue={formValues.firstName}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                <div className="col-md-6 form___element">
+                                    <SimpleTextBox labelname={"lastName"}
+                                        labelText={"Last Name"}
+                                        labelClassName={"form-label"}
+                                        inputType={"text"}
+                                        textClassName={"form-control"}
+                                        formId={"lastName"}
+                                        textautoComplete={"off"}
+                                        name={"lastName"}
+                                        textValue={formValues.lastName}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                <div className="col-md-6 form___element">
+                                    <SimpleEmailFirld labelname={"inputEmail4"}
+                                        labelText={"Email"}
+                                        labelClassName={"form-label"}
+                                        inputType={"email"}
+                                        textClassName={"form-control"}
+                                        formId={"inputEmail4"}
+                                        textautoComplete={"off"}
+                                        name={"email"}
+                                        textValue={formValues.email}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                <div className="col-md-6 form___element">
+                                    <PasswordField
+                                        labelname={"inputPassword4"}
+                                        labelText={"Password"}
+                                        labelClassName={"form-label"}
+                                        inputType={"password"}
+                                        textClassName={"form-control"}
+                                        formId={"inputPassword4"}
+                                        textautoComplete={"off"}
+                                        name={"password"}
+                                        textValue={formValues.password}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                <div className="col-12 form___element">
+
+                                    <SimpleTextBox labelname={"inputAddress"}
+                                        labelText={"Address"}
+                                        labelClassName={"form-label"}
+                                        inputType={"text"}
+                                        textClassName={"form-control"}
+                                        formId={"inputAddress"}
+                                        textautoComplete={"off"}
+                                        name={"address"}
+                                        textValue={formValues.address}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                <div className="col-12 form___element">
+
+                                    <SimpleTextBox labelname={"inputAddress2"}
+                                        labelText={"Address 2"}
+                                        labelClassName={"form-label"}
+                                        inputType={"text"}
+                                        textClassName={"form-control"}
+                                        formId={"inputAddress2"}
+                                        textautoComplete={"off"}
+                                        name={"address2"}
+                                        textValue={formValues.address2}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                <div className="col-md-6 form___element">
+
+                                    <SimpleTextBox
+                                        labelname={"inputCity"}
+                                        labelText={"City"}
+                                        labelClassName={"form-label"}
+                                        inputType={"text"}
+                                        textClassName={"form-control"}
+                                        formId={"inputCity"}
+                                        textautoComplete={"off"}
+                                        name={"city"}
+                                        textValue={formValues.city}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                
+                                <div className="col-md-2 form___element">
+
+                                    <SimpleTextBox
+                                        labelname={"inputZip"}
+                                        labelText={"PIN Code"}
+                                        labelClassName={"form-label"}
+                                        inputType={"text"}
+                                        textClassName={"form-control"}
+                                        formId={"inputZip"}
+                                        textautoComplete={"off"}
+                                        name={"pin"}
+                                        textValue={formValues.pin}
+                                        onChange={handleInput}
+                                    />
+
+                                </div>
+                                <div className="col-12 form___element">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" id="gridCheck" />
+                                        <label className="form-check-label" for="gridCheck">
+                                            Check me out
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="col-12 form___button___element">
+                                    <button type="submit" className="btn btn-primary">Sign in</button>
                                 </div>
                             </div>
-                            <div className="col-12 form___button___element">
-                                <button type="submit" className="btn btn-primary">Sign in</button>
-                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            <Footer />
+        </>
     )
 }
 
 const Login = () => {
     return (
-        <div className="main___containers">
+        <>
+            <Header />
+            <div className="main___containers">
 
-        </div>
+            </div>
+            <Footer />
+        </>
     )
 }
 
 const Home = () => {
     return (
         <>
-        
+            <div className="container-fluid Background__home">
+                <div className="midBox">
+                    <div className="buttonHolder">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <NavLink to='signup'>Sign Up</NavLink>
+                            </div>
+                            <div className="col-md-6">
+                                <NavLink to='login'>Login</NavLink>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
 
 
 
-
-
-export { SignUp, Login }
+export { Home, Login, SignUp }
