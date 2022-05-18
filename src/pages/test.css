@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     background-color: hsl(50, 22%, 21%);
+    height: 100vh;
 }
 
 #particles-js {
@@ -23,14 +24,53 @@
     padding: 5px;
     border-radius: 5px;
     border: 1px solid;
+    aspect-ratio: 16/9;
     width: 55%;
     box-sizing: border-box;
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+.box__container{
+    border: solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid;
+    height: auto;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
 .form___section {
     padding: 1rem;
+}
+
+.login__pannel{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.logo__container{
+    position: relative;
+    margin-left: 35%;
+    border-radius: 50%;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width:25%;
+    height:70%;
+}
+
+.logo__container svg{
+    opacity: 0.8;
 }
 
 .form___element {
@@ -72,4 +112,26 @@
     box-sizing: border-box;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 5%;
+}
+
+.SignUp__Property{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background-color: #fff;
+    max-height: 100px;
+    width: 40%;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.block__holder{
+    border: solid 1px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #fff;
+    margin-left: 10px;
+    height: 100%;
+    width: 35%; 
 }

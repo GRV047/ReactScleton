@@ -6,7 +6,8 @@ import { Header, Footer } from '../defaultComponents/common-components';
 import { NavLink, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { SimpleTextBox, SimpleEmailFirld, PasswordField } from '../util/FormFirlds/FormFirld';
+import { SimpleTextBox } from '../util/FormFirlds/FormFirld';
+import SignUpWith from '../util/OAuth2_Components/signUpComponent';
 
 
 toast.configure();
@@ -31,13 +32,13 @@ const SignUp = () => {
         setFormValue({ ...formValues, [name]: value })
     }
     const navigate = useNavigate()
-    const signUpUser = async(event) => {
+    const signUpUser = async (event) => {
         event.preventDefault();
         let object = formValues
         object['fullAddress'] = `${formValues.address}, ${formValues.address2}`
         const response = await signUp(object);
 
-        console.log('this',response)
+        console.log('this', response)
         if (response.status === 200) {
             toast.success('Successfuly created', {
                 position: "top-right",
@@ -69,7 +70,6 @@ const SignUp = () => {
         <>
             <Header />
             <div className="viewPort">
-
                 <div className="main___containers mt-3 mb-3">
                     <div className="heading___text">
                         <h3>Sign Up</h3>
@@ -104,7 +104,7 @@ const SignUp = () => {
                                     />
                                 </div>
                                 <div className="col-md-6 form___element">
-                                    <SimpleEmailFirld labelname={"inputEmail4"}
+                                    <SimpleTextBox labelname={"inputEmail4"}
                                         labelText={"Email"}
                                         labelClassName={"form-label"}
                                         inputType={"email"}
@@ -117,7 +117,7 @@ const SignUp = () => {
                                     />
                                 </div>
                                 <div className="col-md-6 form___element">
-                                    <PasswordField
+                                    <SimpleTextBox
                                         labelname={"inputPassword4"}
                                         labelText={"Password"}
                                         labelClassName={"form-label"}
@@ -173,14 +173,14 @@ const SignUp = () => {
                                         onChange={handleInput}
                                     />
                                 </div>
-                                
+
                                 <div className="col-md-2 form___element">
 
                                     <SimpleTextBox
                                         labelname={"inputZip"}
                                         labelText={"PIN Code"}
                                         labelClassName={"form-label"}
-                                        inputType={"text"}
+                                        inputType={"number"}
                                         textClassName={"form-control"}
                                         formId={"inputZip"}
                                         textautoComplete={"off"}
@@ -223,13 +223,65 @@ const SignUp = () => {
 }
 
 const Login = () => {
+
+    const login = (event) => {
+        event.preventDefault();
+    }
     return (
         <>
             <Header />
-            <div className="main___containers">
+            <div className="viewPort">
+                <div className="main___containers">
+                    <div className="box__container mt-3 mb-3">
+                        <form className="form___section" onSubmit={login}>
+                            <div className="login__pannel">
+                                <div className="logo__container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        {/* <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --> */}
+                                        <path d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z" /></svg>
+                                </div>
+                                <SimpleTextBox labelname={"userName"}
+                                    labelText={"User Name"}
+                                    labelClassName={"form-label"}
+                                    inputType={"text"}
+                                    textClassName={"form-control"}
+                                    formId={"lastName"}
+                                    textautoComplete={"off"}
+                                    name={"lastName"}
+                                    textValue={""}
+                                />
 
+                                <SimpleTextBox labelname={"password"}
+                                    labelText={"Password"}
+                                    labelClassName={"form-label"}
+                                    inputType={"password"}
+                                    textClassName={"form-control"}
+                                    formId={"password"}
+                                    textautoComplete={"off"}
+                                    name={"password"}
+                                    textValue={""}
+                                />
+                                <br />
+                                <button type="submit" className="btn btn-primary">Login</button>
+                            </div>
+                        </form>
+                        <div className="container SignUp__Property">
+                            <div className="row">
+                                <h3>Sign Up With</h3>
+                            </div>
+                            <div className="row">
+                                <div className="col-sm-2 block__holder">
+                                    <SignUpWith mediaProfile={"facebook"}/>
+                                </div>
+                                <div className="col-sm-2 block__holder">
+                                    <SignUpWith mediaProfile={"google"}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <Footer />
+
         </>
     )
 }
