@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './test.css';
-import { signUp } from '../environment/models/admin.url';
+import { signUp, loginAdmin } from '../environment/models/admin.url';
 
 import { Header, Footer } from '../defaultComponents/common-components';
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -8,6 +8,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SimpleTextBox } from '../util/FormFirlds/FormFirld';
 import SignUpWith from '../util/OAuth2_Components/signUpComponent';
+import { LoginContex } from '../context/main__state'
+// import {UserLoginContext} from '../context/main__state'
+
 
 
 toast.configure();
@@ -18,6 +21,7 @@ const SignUp = () => {
         lastName: "",
         email: "",
         password: "",
+        userName: "",
         address: "",
         address2: "",
         city: "",
@@ -36,20 +40,21 @@ const SignUp = () => {
         event.preventDefault();
         let object = formValues
         object['fullAddress'] = `${formValues.address}, ${formValues.address2}`
+        object['status'] = true;
         const response = await signUp(object);
 
         console.log('this', response)
         if (response.status === 200) {
-            toast.success('Successfuly created', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                type: "success"
-            })
+            // toast.success('Successfuly created', {
+            //     position: "top-right",
+            //     autoClose: 5000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     type: "success"
+            // })
             navigate("/")
         } else {
             toast("Oops! Somthing went wrong", {
@@ -62,7 +67,7 @@ const SignUp = () => {
                 progress: undefined,
                 type: "error"
             })
-            navigate("/")
+            //navigate("/")
         }
 
     }
@@ -130,7 +135,21 @@ const SignUp = () => {
                                         onChange={handleInput}
                                     />
                                 </div>
-                                <div className="col-12 form___element">
+                                <div className="col-md-6 form___element">
+                                    <SimpleTextBox
+                                        labelname={"userName"}
+                                        labelText={"User Name"}
+                                        labelClassName={"form-label"}
+                                        inputType={"text"}
+                                        textClassName={"form-control"}
+                                        formId={"userName"}
+                                        textautoComplete={"off"}
+                                        name={"userName"}
+                                        textValue={formValues.userName}
+                                        onChange={handleInput}
+                                    />
+                                </div>
+                                <div className="col-6 form___element">
 
                                     <SimpleTextBox labelname={"inputAddress"}
                                         labelText={"Address"}
@@ -223,9 +242,30 @@ const SignUp = () => {
 }
 
 const Login = () => {
+    const { logIn } = useContext(LoginContex)
 
-    const login = (event) => {
+    const [formValues, setFormValue] = useState({
+        userName: "",
+        password: ""
+    })
+
+    const handleInput = (event) => {
+        const key = event.target.name;
+        const value = event.target.value;
+
+        setFormValue({ ...formValues, [key]: value })
+    }
+
+    const loginUser = async (event) => {
         event.preventDefault();
+        let object = formValues;
+        const response = await loginAdmin(object);
+        //console.log(response)
+
+        if (response.status === 200) {
+            console.log('hello', logIn)
+            logIn(true, response);
+        }
     }
     return (
         <>
@@ -233,7 +273,7 @@ const Login = () => {
             <div className="viewPort">
                 <div className="main___containers">
                     <div className="box__container mt-3 mb-3">
-                        <form className="form___section" onSubmit={login}>
+                        <form className="form___section" onSubmit={loginUser}>
                             <div className="login__pannel">
                                 <div className="logo__container">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -245,10 +285,11 @@ const Login = () => {
                                     labelClassName={"form-label"}
                                     inputType={"text"}
                                     textClassName={"form-control"}
-                                    formId={"lastName"}
+                                    formId={"userName"}
                                     textautoComplete={"off"}
-                                    name={"lastName"}
-                                    textValue={""}
+                                    name={"userName"}
+                                    textValue={formValues.userName}
+                                    onChange={handleInput}
                                 />
 
                                 <SimpleTextBox labelname={"password"}
@@ -259,7 +300,8 @@ const Login = () => {
                                     formId={"password"}
                                     textautoComplete={"off"}
                                     name={"password"}
-                                    textValue={""}
+                                    textValue={formValues.password}
+                                    onChange={handleInput}
                                 />
                                 <br />
                                 <button type="submit" className="btn btn-primary">Login</button>
@@ -271,10 +313,10 @@ const Login = () => {
                             </div>
                             <div className="row">
                                 <div className="col-sm-2 block__holder">
-                                    <SignUpWith mediaProfile={"facebook"}/>
+                                    <SignUpWith mediaProfile={"facebook"} />
                                 </div>
                                 <div className="col-sm-2 block__holder">
-                                    <SignUpWith mediaProfile={"google"}/>
+                                    <SignUpWith mediaProfile={"google"} />
                                 </div>
                             </div>
                         </div>

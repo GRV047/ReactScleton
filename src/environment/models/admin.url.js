@@ -32,9 +32,17 @@ async function signUp(object) {
     return await axios.post(url,object);
 }
 
+//LOGIN METHOD ENDPOINT
+async function loginAdmin(object){
+    const url = Admin.login;
+    //console.log(url,object)
+    return await axios.post(url,object);
+}
+
 export {
     signUp,
     get,
     post,
-    update
+    update,
+    loginAdmin
 }

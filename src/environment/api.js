@@ -10,7 +10,8 @@ const Common = {
 
 //Admin Model
 const Admin = {
-    signUp:Common.adminCommon+'/signUp'
+    signUp:Common.adminCommon+'/signUp',
+    login:Common.adminCommon+'/login'
 }
 
 
