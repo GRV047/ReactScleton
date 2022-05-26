@@ -1,31 +1,53 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
+import { loginAdmin } from '../environment/models/admin.url';
 
 const LoginContex = createContext({
-    data:{},
-    isLogin:false,
-    logIn:(status,dataObject)=>{}
+    credentials: (object) => { }
 });
 
-const MainState=( {children} ) => {
+export const UserDataContext = createContext({
+});
+
+// export function useUserDatacontext() {
+//     console.log('this',UserDataContext)
+//     return useContext(UserDataContext)
+// }
+
+const MainState = ({ children }) => {
     const [user, setUserData] = useState({
-        isLogin: false,
-        data: {}
     })
 
-    const logIn = (status,dataObject)  => {
-        setUserData({
-            isLogin: status,
-            data: dataObject
+    const [loginData, setLoginData] = useState({
+        credentials: () => { }
+    })
+
+    function credentials(object) {
+        setLoginData({
+            ...object
         })
+        logIn(object)
     }
 
+    async function logIn(object){
+        // Login Operations
+        const response = await loginAdmin(object);
+        if (response.data.status === 200) {
+            setUserData(()=>{
+                return response.data;
+            })
+        }
+    }
+    
+    console.log(user)
     return (
         <>
-            <LoginContex.Provider value={{ user, logIn }}>
-                {children}
+            <LoginContex.Provider value={{ credentials }}>
+                <UserDataContext.Provider value={ user}>
+                    {children}
+                </UserDataContext.Provider>
             </LoginContex.Provider>
         </>
     )
 }
 
-export {MainState,LoginContex};
+export { MainState, LoginContex };

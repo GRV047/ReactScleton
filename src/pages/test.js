@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import './test.css';
-import { signUp, loginAdmin } from '../environment/models/admin.url';
+import { signUp } from '../environment/models/admin.url';
 
 import { Header, Footer } from '../defaultComponents/common-components';
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { SimpleTextBox } from '../util/FormFirlds/FormFirld';
 import SignUpWith from '../util/OAuth2_Components/signUpComponent';
 import { LoginContex } from '../context/main__state'
-// import {UserLoginContext} from '../context/main__state'
+
 
 
 
@@ -242,7 +242,7 @@ const SignUp = () => {
 }
 
 const Login = () => {
-    const { logIn } = useContext(LoginContex)
+    let { credentials } = useContext(LoginContex)
 
     const [formValues, setFormValue] = useState({
         userName: "",
@@ -259,13 +259,9 @@ const Login = () => {
     const loginUser = async (event) => {
         event.preventDefault();
         let object = formValues;
-        const response = await loginAdmin(object);
-        //console.log(response)
-
-        if (response.status === 200) {
-            console.log('hello', logIn)
-            logIn(true, response);
-        }
+        
+        credentials(object);
+        
     }
     return (
         <>
