@@ -4,16 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { MainState } from './context/main__state';
+//import { MainState } from './context/main__state';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
 
   <React.StrictMode>
-    <MainState>
-      <App />
-    </MainState>
+    <App />
   </React.StrictMode>
 
 );

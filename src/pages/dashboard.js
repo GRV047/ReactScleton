@@ -1,17 +1,14 @@
 import './dashboard.css';
-import {UserDataContext} from '../context/main__state'
-import { useContext } from 'react';
-
+import UserAuth from '../context/main__state';
 
 const Dashboard = () => {
 
-    const user = useContext(UserDataContext)
-    console.log(user)
+    const {user} = UserAuth();
     return (
         <>
             <div className="main__body">
                 <div className="tableContainer">
-                    <h3>{user? user:'NONE'}</h3>
+                    <h3>{user ? user.user.firstName:'NONE'}</h3>
                 </div>
             </div>
         </>
