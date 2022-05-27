@@ -6,21 +6,28 @@ import {
   Routes,
   Route,
   BrowserRouter
-} from "react-router-dom"
+} from "react-router-dom";
+import UserAuth, { MainState } from './context/main__state';
+import { useEffect } from 'react';
+
+
 
 
 function App() {
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Home />}></Route>
-          <Route path="home" element={<Home />} />
-          <Route path="signup" element={<SignUp />}></Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="dashboard" element={<Dashboard />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <MainState>
+          <BrowserRouter>
+            <Routes>
+              <Route index element={<Home />}></Route>
+              <Route path="home" element={<Home />} />
+              <Route path="signup" element={<SignUp />}></Route>
+              <Route path="login" element={<Login />}></Route>
+              <Route path="dashboard" element={<Dashboard />}></Route>
+            </Routes>
+          </BrowserRouter>
+      </MainState>
     </>
   );
 }

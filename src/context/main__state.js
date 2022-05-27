@@ -1,53 +1,67 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import { loginAdmin } from '../environment/models/admin.url';
 
 const LoginContex = createContext({
-    credentials: (object) => { }
+    isLogin: false,
+    loading: false,
+    error: '',
+    user: {},
+    logIn: (userName, password) => { }
 });
 
-export const UserDataContext = createContext({
-});
 
-// export function useUserDatacontext() {
-//     console.log('this',UserDataContext)
-//     return useContext(UserDataContext)
-// }
 
-const MainState = ({ children }) => {
-    const [user, setUserData] = useState({
-    })
+export const MainState = ({ children }) => {
 
-    const [loginData, setLoginData] = useState({
-        credentials: () => { }
-    })
+    const [user, setUserData] = useState({});
 
-    function credentials(object) {
-        setLoginData({
-            ...object
+    const [isLogin, setIsLogin] = useState(false);
+
+    const [loading, setLoading] = useState(false);
+
+    const [error, setError] = useState();
+
+    function logIn(userName, password) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                setLoading(true);
+                const loginData = await loginAdmin({ userName, password });
+                if (loginData.status === 200) {
+                    setUserData(loginData.data.data);
+                    setIsLogin(true);
+                    resolve(loginData)
+                } else {
+                    console.log(loginData.errMsg)
+                }
+            } catch (err) {
+                setError(err);
+                reject(err);
+            }
         })
-        logIn(object)
     }
 
-    async function logIn(object){
-        // Login Operations
-        const response = await loginAdmin(object);
-        if (response.data.status === 200) {
-            setUserData(()=>{
-                return response.data;
-            })
-        }
-    }
-    
-    console.log(user)
+    const memoedValue = useMemo(
+        () => ({
+            isLogin,
+            loading,
+            error,
+            user,
+            logIn
+        }),
+        [user, isLogin, logIn])
+
+
+
+
     return (
         <>
-            <LoginContex.Provider value={{ credentials }}>
-                <UserDataContext.Provider value={ user}>
-                    {children}
-                </UserDataContext.Provider>
+            <LoginContex.Provider value={{ memoedValue, logIn, user }}>
+                {children}
             </LoginContex.Provider>
         </>
     )
 }
 
-export { MainState, LoginContex };
+export default function UserAuth() {
+    return useContext(LoginContex);
+}

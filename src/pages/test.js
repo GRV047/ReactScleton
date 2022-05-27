@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import './test.css';
 import { signUp } from '../environment/models/admin.url';
 
@@ -8,8 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SimpleTextBox } from '../util/FormFirlds/FormFirld';
 import SignUpWith from '../util/OAuth2_Components/signUpComponent';
-import { LoginContex } from '../context/main__state'
-
+import UserAuth from '../context/main__state'
 
 
 
@@ -43,7 +42,6 @@ const SignUp = () => {
         object['status'] = true;
         const response = await signUp(object);
 
-        console.log('this', response)
         if (response.status === 200) {
             // toast.success('Successfuly created', {
             //     position: "top-right",
@@ -242,8 +240,8 @@ const SignUp = () => {
 }
 
 const Login = () => {
-    let { credentials } = useContext(LoginContex)
-
+    let navigate = useNavigate();
+    const { logIn, user } = UserAuth();
     const [formValues, setFormValue] = useState({
         userName: "",
         password: ""
@@ -260,8 +258,8 @@ const Login = () => {
         event.preventDefault();
         let object = formValues;
         
-        credentials(object);
-        
+        const res = await logIn(object.userName, object.password);
+        navigate('/dashboard')
     }
     return (
         <>
